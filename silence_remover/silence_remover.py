@@ -12,66 +12,32 @@ frames_per_chunk = 1  # duration of chunks in seconds. smaller means more
 # smaller pieces to change the start/end of your window.
 
 
-def _chunk_to_timestamp(chunknumber, chunk_duration):
-    return chunknumber * chunk_duration
+def find_quiet(audio_clip, chunk_width, threshold=.01):
+
+    assert type(chunk_width) is int
+    # store sectional data
+    silent_sections = []
+    current_loud = False
+    for i, chunk in enumerate(audio_clip.iter_chunks(chunksize=chunk_width)):
+        a = np.max(chunk)
+        if not current_loud:
+            if a >= threshold:
+                start_loud = i * chunk_width / audio_clip.fps
+                current_loud = True
+        else:
+            if a < threshold:
+                silent_sections.append(
+                    (start_loud, i * chunk_width / audio_clip.fps)
+                )
+                current_loud = False
+    return silent_sections
 
 
-def remove_silence(filename, output_filename=None, threshold=.01):  # {{{
-
-    inpt = editor.VideoFileClip(filename)
-    try:
-        fps = inpt.fps
-    except AttributeError:
-        print(
-            'remove_silence:',
-            f'unable to extract framerate from {filename}; assuming 30.'
-        )
-        fps = 30
-    if output_filename is None:
-        n, *ext = filename.split('.')
-        output_filename = f'{n}_modified.{".".join(ext)}'
-    print(f'saving result to {output_filename}')
-
-    print('calculating removals...')
-
-    with editor.AudioFileClip(filename) as sound:
-        # initialise and calculate required variables
-
-        # duration of chunk in seconds
-        chunk_duration = frames_per_chunk / fps
-
-        # number of frames per chunk
-        chunk_length = int(chunk_duration * sound.fps)
-
-        # number of seconds per chunk (altered)
-        chunk_duration = chunk_length / sound.fps
-
-        # store sectional data
-        silent_sections = []
-        current_loud = False
-        for i, chunk in enumerate(sound.iter_chunks(chunksize=chunk_length)):
-            a = np.max(chunk)
-            if not current_loud:
-                if a >= threshold:
-                    start_loud = _chunk_to_timestamp(i, chunk_duration)
-                    current_loud = True
-            else:
-                if a < threshold:
-                    silent_sections.append(
-                        (start_loud, _chunk_to_timestamp(i, chunk_duration))
-                    )
-                    current_loud = False
-
-    start, end = np.array(silent_sections).T
-
-    print('making', len(silent_sections), 'cuts.')
-
+def remove_sections(video_clip, sections):  # {{{
     clips = []
-    for start, end in silent_sections:
+    for start, end in sections:
         clips.append(inpt.subclip(start, end))
-    print('rendering...')
-    final = editor.concatenate_videoclips(clips)
-    final.write_videofile(output_filename)
+    return editor.concatenate_videoclips(clips)
 # }}}
 
 
@@ -94,6 +60,18 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    remove_silence(
-        args.file, output_filename=args.output_file, threshold=args.threshold
-    )
+    if args.output_file is None:
+        n, *ext = args.file.split('.')
+        output_file = f'{n}_modified.{".".join(ext)}'
+    else:
+        output_file = args.output_file
+    print(f'saving result to {output_file}')
+    print('calculating removals...')
+    inpt = editor.VideoFileClip(args.file)
+
+    # chunk_length is the number of audio frames in 1 video frame as this is
+    # the smallest resolution possible to split the video up into.
+    cuts = find_quiet(inpt.audio, int(inpt.audio.fps/inpt.fps))
+    print(f'making {len(cuts)} cuts')
+    final = remove_sections(inpt, cuts)
+    final.write_videofile(output_file)
