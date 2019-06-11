@@ -39,6 +39,7 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 Todo
 ----
 
+* testing (get a good example video)
 * GUI interface
 * PY2EXE implementation
 * audio command line interface
