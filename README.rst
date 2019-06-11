@@ -26,7 +26,7 @@ An automated video editing tool that removes lengths of silence.
 Features
 --------
 
-* TODO
+* Automatically edit audio or video clips to remove silent or quiet sections
 
 Credits
 -------
@@ -35,3 +35,10 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+Todo
+----
+
+* GUI interface
+* PY2EXE implementation
+* audio command line interface
