@@ -20,9 +20,11 @@ def _video_silence(file, output_file, threshold):
 
     # chunk_length is the number of audio frames in 1 video frame as this is
     # the smallest resolution possible to split the video up into.
-    cuts = quiet_sections(inpt.audio, int(inpt.audio.fps/inpt.fps))
+    cuts = quiet_sections(inpt.audio, int(inpt.audio.fps/inpt.fps),
+                          threshold=threshold)
     click.echo(f'making {len(cuts)} cuts')
     final = remove_sections(inpt, cuts)
     final.write_videofile(output_file)
+
 
 _video_silence()
