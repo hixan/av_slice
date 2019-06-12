@@ -49,7 +49,7 @@ Use
 automatically remove silence from `video.mp4`:
 
 ```
-av_slice video.mp4 --output_file=shorter_video.mp4
+python -m av_slice video.mp4 --output_file=shorter_video.mp4
 ```
 
 the script will run for a while calculating changes and composing the video. When it is finished, shorter_video.mp4 will be saved to the disk.
