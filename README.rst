@@ -28,6 +28,32 @@ Features
 
 * Automatically edit audio or video clips to remove silent or quiet sections
 
+Installation
+------------
+Install with pip:
+
+```
+pip install av_slice
+```
+
+or clone and install from source:
+
+```
+git clone https://github.com/hixan/av_slice.git
+cd av_slice
+make install
+```
+
+Use
+----
+automatically remove silence from `video.mp4`:
+
+```
+python -m av_slice video.mp4 --output_file=shorter_video.mp4
+```
+
+the script will run for a while calculating changes and composing the video. When it is finished, shorter_video.mp4 will be saved to the disk.
+
 Credits
 -------
 Heavily inspired by Carkyhs Jumpcutter_ library.
