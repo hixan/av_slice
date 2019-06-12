@@ -1,7 +1,7 @@
 from moviepy import editor
 import click
-from silence_remover.audio import quiet_sections
-from silence_remover.video import remove_sections
+from av_slice.audio import quiet_sections
+from av_slice.video import remove_sections
 
 
 @click.command()
