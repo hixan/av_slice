@@ -1,8 +1,7 @@
-import argparse
 from moviepy import editor
 import click
-from audio import quiet_sections
-from video import remove_sections
+from silence_remover.audio import quiet_sections
+from silence_remover.video import remove_sections
 
 
 @click.command()

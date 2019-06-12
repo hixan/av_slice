@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from moviepy import editor
-from audio import quiet_sections
-import argparse
+from silence_remover.audio import quiet_sections
 
 
 def remove_sections(video_clip, sections):  # {{{
