@@ -30,11 +30,13 @@ Features
 
 Credits
 -------
+Heavily inspired by Carkyhs Jumpcutter_ library.
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Jumpcutter: https://github.com/carykh/jumpcutter
 
 Todo
 ----
@@ -43,3 +45,7 @@ Todo
 * GUI interface
 * PY2EXE implementation
 * audio command line interface
+
+Wishlist
+--------
+* automatic detection of appropriate threshold
