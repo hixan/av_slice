@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `silence_remover` package."""
+"""Tests for `av_slice` package."""
 
 import pytest
 
 from click.testing import CliRunner
 
-from silence_remover import silence_remover
-from silence_remover import cli
+from av_slice import audio
+from av_slice import video
+import av_slice
 
 
 @pytest.fixture
@@ -30,9 +31,6 @@ def test_content(response):
 def test_command_line_interface():
     """Test the CLI."""
     runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert 'silence_remover.cli.main' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
+    help_result = runner.invoke(av_slice, ['--help'])
     assert help_result.exit_code == 0
     assert '--help  Show this message and exit.' in help_result.output
