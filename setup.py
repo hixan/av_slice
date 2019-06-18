@@ -34,7 +34,8 @@ setup(
     description="Automatic video editing",
     entry_points={
         'console_scripts': [
-            'av_slice=av_slice.cli:main',
+            'av_slice-video=av_slice.cli:video',
+            'av_slice-audio=av_slice.cli:audio',
         ],
     },
     install_requires=requirements,

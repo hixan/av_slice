@@ -1,4 +1,6 @@
 import numpy as np
+from moviepy.audio import AudioClip
+
 
 def quiet_sections(audio_clip, chunk_duration, threshold=.01):  # {{{
 
@@ -22,3 +24,8 @@ def quiet_sections(audio_clip, chunk_duration, threshold=.01):  # {{{
                 current_loud = False
     return silent_sections  # }}}
 
+
+def remove_sections(audio_clip, sections):
+    return AudioClip.CompositeAudioClip(
+        [audio_clip.subclip(start, end) for start, end in sections]
+    )
