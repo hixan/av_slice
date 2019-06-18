@@ -3,14 +3,14 @@ Silence Remover
 ===============
 
 
-.. image:: https://img.shields.io/pypi/v/silence_remover.svg
-        :target: https://pypi.python.org/pypi/silence_remover
+.. image:: https://img.shields.io/pypi/v/av_slice.svg
+        :target: https://pypi.python.org/pypi/av_slice
 
-.. image:: https://img.shields.io/travis/Hixan/silence_remover.svg
-        :target: https://travis-ci.org/Hixan/silence_remover
+.. image:: https://img.shields.io/travis/Hixan/av_slice.svg
+        :target: https://travis-ci.org/Hixan/av_slice
 
-.. image:: https://readthedocs.org/projects/silence-remover/badge/?version=latest
-        :target: https://silence-remover.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/av-slice/badge/?version=latest
+        :target: https://av-slice.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -20,13 +20,39 @@ An automated video editing tool that removes lengths of silence.
 
 
 * Free software: MIT license
-* Documentation: https://silence-remover.readthedocs.io.
+* Documentation: https://av-slice.readthedocs.io.
 
 
 Features
 --------
 
 * Automatically edit audio or video clips to remove silent or quiet sections
+
+Installation
+------------
+Install with pip:
+
+```
+pip install av_slice
+```
+
+or clone and install from source:
+
+```
+git clone https://github.com/hixan/av_slice.git
+cd av_slice
+make install
+```
+
+Use
+----
+automatically remove silence from `video.mp4`:
+
+```
+python -m av_slice video.mp4 --output_file=shorter_video.mp4
+```
+
+the script will run for a while calculating changes and composing the video. When it is finished, shorter_video.mp4 will be saved to the disk.
 
 Credits
 -------
