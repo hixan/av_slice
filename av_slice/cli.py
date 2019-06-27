@@ -3,7 +3,8 @@
 """Console script for av_slice."""
 import sys
 import click
-from moviepy import editor
+from moviepy.video.io.VideoFileClip import VideoFileClip
+from moviepy.audio.io.AudioFileClip import AudioFileClip
 from av_slice.audio import loud_sections, remove_sections as a_remove_sections
 from av_slice.video import remove_sections as v_remove_sections
 
@@ -19,12 +20,12 @@ def video(file, output_file, threshold):
         output_file = f'{n}_modified.{".".join(ext)}'
     click.echo(f'saving result to {output_file}')
     click.echo('calculating removals...')
-    inpt = editor.VideoFileClip(file)
+    inpt = VideoFileClip(file)
 
     # chunk_length is the number of audio frames in 1 video frame as this is
     # the smallest resolution possible to split the video up into.
     cuts = loud_sections(inpt.audio, int(inpt.audio.fps/inpt.fps),
-                          threshold=threshold)
+                         threshold=threshold)
     click.echo(f'making {len(cuts)} cuts')
     final = v_remove_sections(inpt, cuts)
     final.write_videofile(output_file)
@@ -50,9 +51,9 @@ def audio(file, output_file, threshold, audio_input, resolution):
     click.echo(f'saving result to {output_file}')
     click.echo(f'calculating removals...')
     if audio_input:
-        audio = editor.AudioFileClip(file)
+        audio = AudioFileClip(file)
     else:
-        infile = editor.VideoFileClip(file)
+        infile = VideoFileClip(file)
         audio = infile.audio
     cuts = loud_sections(audio, resolution, threshold=threshold)
     final = a_remove_sections(audio, cuts)
