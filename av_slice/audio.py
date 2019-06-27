@@ -2,10 +2,10 @@ import numpy as np
 from moviepy.audio import AudioClip
 
 
-def quiet_sections(audio_clip, chunk_duration, threshold=.01):  # {{{
+def loud_sections(audio_clip, chunk_duration, threshold=.01):  # {{{
 
     # store sectional data
-    silent_sections = []
+    loud_sections = []
     current_loud = False
     for i, chunk in enumerate(audio_clip.iter_chunks(
         chunk_duration=chunk_duration
@@ -17,13 +17,13 @@ def quiet_sections(audio_clip, chunk_duration, threshold=.01):  # {{{
                 current_loud = True
         else:
             if a < threshold:
-                silent_sections.append(
+                loud_sections.append(
                     (start_loud, i * chunk_duration)
                 )
                 current_loud = False
-    if current_loud:  # add last silent section if necessary.
-        silent_sections.append((start_loud, audio_clip.duration))
-    return silent_sections  # }}}
+    if current_loud:  # add last loud section if necessary.
+        loud_sections.append((start_loud, audio_clip.duration))
+    return loud_sections  # }}}
 
 
 def remove_sections(audio_clip, sections):  # {{{

@@ -9,7 +9,7 @@ import pytest
 
 import numpy as np
 from moviepy.audio.AudioClip import AudioClip
-from av_slice.audio import quiet_sections, remove_sections
+from av_slice.audio import loud_sections, remove_sections
 
 '''
 
@@ -31,10 +31,10 @@ def test_cmd_setup_audio():
 
 '''
 
-# {{{ quiet sections tests
+# {{{ loud sections tests
 
 @pytest.fixture
-def quiet_sections_audio():
+def loud_sections_audio():
     '''returns audioclip of different frequency, amplitude sine waves
     as follows:
        0| silent
@@ -90,98 +90,98 @@ def quiet_sections_audio():
     return AudioClip(make_audio_frame, duration=100, fps=4200)
 
 
-def test_quiet_sections_1_start_nend(quiet_sections_audio):
+def test_loud_sections_1_start_nend(loud_sections_audio):
     # test when a section includes the very beginning but not the very end
     resolution = .05
-    clip = quiet_sections_audio.subclip(1.5, 2.5)
+    clip = loud_sections_audio.subclip(1.5, 2.5)
     expected = np.array([[1.5, 2]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.01))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.01))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_1_nstart_nend(quiet_sections_audio):
+def test_loud_sections_1_nstart_nend(loud_sections_audio):
     # test when a section includes neither the very beginning nor the very end
     resolution = .05
-    clip = quiet_sections_audio.subclip(0.5, 2.5)
+    clip = loud_sections_audio.subclip(0.5, 2.5)
     expected = np.array([[1, 2]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.01))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.01))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_1_nstart_end(quiet_sections_audio):
+def test_loud_sections_1_nstart_end(loud_sections_audio):
     # test when a section includes the end but not beginning
     resolution = .05
-    clip = quiet_sections_audio.subclip(0.5, 1.5)
+    clip = loud_sections_audio.subclip(0.5, 1.5)
     expected = np.array([[1, 1.5]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.01))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.01))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_1_start_end(quiet_sections_audio):
+def test_loud_sections_1_start_end(loud_sections_audio):
     # test when section includes beginning and end
     resolution = .05
-    clip = quiet_sections_audio.subclip(1.2, 1.7)
+    clip = loud_sections_audio.subclip(1.2, 1.7)
     expected = np.array([[1.2, 1.7]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.01))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.01))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_3_nstart_nend(quiet_sections_audio):
+def test_loud_sections_3_nstart_nend(loud_sections_audio):
     # test when section includes neither beginning nor end with 3 sections
     resolution = .05
-    clip = quiet_sections_audio.subclip(0.5, 6.5)
+    clip = loud_sections_audio.subclip(0.5, 6.5)
     expected = np.array([[1, 2], [3, 4], [5, 6]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.01))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.01))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_threshold(quiet_sections_audio):
+def test_loud_sections_threshold(loud_sections_audio):
     # test when section includes neither beginning nor end with 3 sections
     resolution = .05
-    clip = quiet_sections_audio.subclip(4.5, 6.5)
+    clip = loud_sections_audio.subclip(4.5, 6.5)
     expected = np.array([[5, 6]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.5))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.5))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
         'sections were not accurate enough / had incorrect start/end times'
 
 
-def test_quiet_sections_threshold_under(quiet_sections_audio):
+def test_loud_sections_threshold_under(loud_sections_audio):
     # test when section includes neither beginning nor end with 3 sections
     resolution = .05
-    clip = quiet_sections_audio.subclip(4.5, 6.5)
+    clip = loud_sections_audio.subclip(4.5, 6.5)
     expected = np.array([[5, 6.5]])
     expected_len = len(expected)
 
-    sections = np.array(quiet_sections(clip, resolution, threshold=0.3))
+    sections = np.array(loud_sections(clip, resolution, threshold=0.3))
 
     assert len(sections) == expected_len, 'returned wrong number of sections'
     assert max(np.sum(sections - expected, axis=1)) <= resolution * 2.01, \
