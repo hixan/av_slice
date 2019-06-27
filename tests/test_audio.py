@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `av_slice` package."""
+"""Tests for `av_slice.audio`."""
 
 import pytest
 
-from click.testing import CliRunner
+# from click.testing import CliRunner
 
 import numpy as np
 from moviepy.audio.AudioClip import AudioClip
-from av_slice import audio
-from av_slice import video
-from av_slice.cli import video as cmd_video, audio as cmd_audio
 from av_slice.audio import quiet_sections, remove_sections
 
+'''
+
+from av_slice.cli import video as cmd_video, audio as cmd_audio
 
 def test_cmd_setup_video():
     """Test the CLI."""
@@ -29,6 +29,7 @@ def test_cmd_setup_audio():
     assert help_result.exit_code == 0, 'help call failed, check config'
     assert '--help' in help_result.output, 'help call failed, check config'
 
+'''
 
 # {{{ quiet sections tests
 
@@ -92,7 +93,7 @@ def quiet_sections_audio():
 def test_quiet_sections_1_start_nend(quiet_sections_audio):
     # test when a section includes the very beginning but not the very end
     resolution = .05
-    clip = quiet_sections_audio.subclip(1.5, 3.5)
+    clip = quiet_sections_audio.subclip(1.5, 2.5)
     expected = np.array([[1.5, 2]])
     expected_len = len(expected)
 
@@ -106,7 +107,7 @@ def test_quiet_sections_1_start_nend(quiet_sections_audio):
 def test_quiet_sections_1_nstart_nend(quiet_sections_audio):
     # test when a section includes neither the very beginning nor the very end
     resolution = .05
-    clip = quiet_sections_audio.subclip(0.5, 3.5)
+    clip = quiet_sections_audio.subclip(0.5, 2.5)
     expected = np.array([[1, 2]])
     expected_len = len(expected)
 
