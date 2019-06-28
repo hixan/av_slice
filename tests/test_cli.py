@@ -1,4 +1,5 @@
 from av_slice.cli import video as cmd_video, audio as cmd_audio
+from click.testing import CliRunner
 
 def test_cmd_setup_video():
     """Test the CLI."""
