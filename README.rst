@@ -71,6 +71,7 @@ Todo
 * GUI interface
 * PY2EXE implementation
 * audio command line interface
+* get ffmpeg installed on travis to enable proper testing
 
 Wishlist
 --------
