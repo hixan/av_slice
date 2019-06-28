@@ -189,3 +189,8 @@ def test_loud_sections_threshold_under(loud_sections_audio):
 
 
 # }}}
+
+# {{{ remove sections tests
+def test_remove_sections():
+    pass
+# }}}
