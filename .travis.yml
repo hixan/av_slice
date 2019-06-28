@@ -8,6 +8,8 @@ python:
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -U tox-travis
+install: sudo add-apt-repository ppa:mc3man/trusty-media
+install: sudo apt-get update
 install: sudo apt-get install -y ffmpeg
 
 # Command to run tests, e.g. python setup.py test
