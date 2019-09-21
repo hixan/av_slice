@@ -14,7 +14,7 @@ from .video import join_sections
 @click.argument('file')
 @click.option('--threshold', default=.01,
               help='threshold under which to make a cut')
-def video(file, output_file, threshold):
+def video(file, output_file: str, threshold: float):
     if output_file == '':
         n, *ext = file.split('.')
         output_file = f'{n}_modified.{".".join(ext)}'

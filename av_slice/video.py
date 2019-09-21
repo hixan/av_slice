@@ -7,7 +7,7 @@ from typing import Tuple, Iterable, Union
 
 
 def join_sections(video_clip: Union[VideoClip, AudioClip],
-                  sections: Iterable[Tuple[int, int]]
+                  sections: Iterable[Tuple[float, float]]
 ) -> VideoClip:  # {{{
     '''join sections from video_clip endoded as a list of (start, end) timestamp pairs.
 

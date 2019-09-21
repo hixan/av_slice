@@ -8,7 +8,7 @@ import pytest
 # from click.testing import CliRunner
 
 import numpy as np
-from moviepy.audio import AudioClip
+from moviepy.audio.AudioClip import AudioClip
 from av_slice.audio import loud_sections
 from av_slice.video import join_sections
 

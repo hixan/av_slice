@@ -1,11 +1,11 @@
 import numpy as np
-from moviepy.audio import AudioClip
-from typing import Iterable, Tuple
+from moviepy.audio.AudioClip import AudioClip
+from typing import List, Tuple
 
-def loud_sections(audio_clip: AudioClip.AudioClip,  # {{{
+def loud_sections(audio_clip: AudioClip,  # {{{
                   chunk_duration: float,
                   threshold: float=.01
-) -> Iterable[Tuple[float, float]]:
+) -> List[Tuple[float, float]]:
     '''Finds loud sections in audio_clip.
 
     :param audio_clip: the audio_clip to search
