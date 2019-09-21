@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# example videos folder (I dont own the rights to any of the lectures)
+example_video/**
+
 # C extensions
 *.so
 
