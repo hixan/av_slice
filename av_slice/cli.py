@@ -5,8 +5,8 @@ import sys
 import click
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.audio.io.AudioFileClip import AudioFileClip
-from av_slice.audio import loud_sections, remove_sections as a_remove_sections
-from av_slice.video import remove_sections as v_remove_sections
+from .audio import loud_sections
+from .video import join_sections
 
 
 @click.command()
@@ -27,7 +27,7 @@ def video(file, output_file, threshold):
     cuts = loud_sections(inpt.audio, int(inpt.audio.fps/inpt.fps),
                          threshold=threshold)
     click.echo(f'making {len(cuts)} cuts')
-    final = v_remove_sections(inpt, cuts)
+    final = join_sections(inpt, cuts)
     final.write_videofile(output_file)
 
 
@@ -56,7 +56,7 @@ def audio(file, output_file, threshold, audio_input, resolution):
         infile = VideoFileClip(file)
         audio = infile.audio
     cuts = loud_sections(audio, resolution, threshold=threshold)
-    final = a_remove_sections(audio, cuts)
+    final = join_sections(audio, cuts)
     final.write_audiofile(output_file, fps=audio.fps)
 
 
