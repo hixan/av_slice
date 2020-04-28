@@ -67,19 +67,19 @@ def loud_sections_audio():
             if t < 1:
                 rv = 0  # silent
             elif t < 2:
-                rv = np.sin(800*np.pi*t)  # normal tone
+                rv = np.sin(800 * np.pi * t)  # normal tone
             elif t < 3:
                 rv = 0  # silent
             elif t < 4:
-                rv = np.sin(1600*np.pi*t)  # high tone
+                rv = np.sin(1600 * np.pi * t)  # high tone
             elif t < 5:
                 rv = 0  # silent
             elif t < 6:
-                rv = np.sin(200*np.pi*t)  # low tone
+                rv = np.sin(200 * np.pi * t)  # low tone
             elif t < 7:
-                rv = np.sin(800*np.pi*t)*.4  # quiet (40% volume)
+                rv = np.sin(800 * np.pi * t) * .4  # quiet (40% volume)
             elif t < 8:
-                rv = np.sin(800*np.pi*t)  # normal tone
+                rv = np.sin(800 * np.pi * t)  # normal tone
             else:
                 rv = 0
             return rv
@@ -189,9 +189,6 @@ def test_loud_sections_threshold_under(loud_sections_audio):
         'sections were not accurate enough / had incorrect start/end times'
 
 
-# }}}
-
-# {{{ remove sections tests
+# remove sections tests
 def test_remove_sections():
     pass
-# }}}
