@@ -2,9 +2,10 @@ import numpy as np
 from moviepy.audio.AudioClip import AudioClip
 from typing import List, Tuple
 
-def loud_sections(audio_clip: AudioClip,  # {{{
-                  chunk_duration: float,
-                  threshold: float=.01
+def loud_sections(
+        audio_clip: AudioClip,  # {{{
+        chunk_duration: float,
+        threshold: float = .01
 ) -> List[Tuple[float, float]]:
     '''Finds loud sections in audio_clip.
 

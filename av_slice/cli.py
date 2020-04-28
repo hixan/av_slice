@@ -10,12 +10,13 @@ from .video import join_sections
 
 
 @click.command()
-@click.option('--output_file', default='', help='filename of output')
 @click.argument('file')
+@click.option('--output_file', default='', help='filename of output')
 @click.option('--threshold', default=.01,
-              help='threshold under which to make a cut')
+              help='threshold for volume under which to make a cut')
 def video(file, output_file: str, threshold: float):
     if output_file == '':
+        # create a modified version of the original filename.
         n, *ext = file.split('.')
         output_file = f'{n}_modified.{".".join(ext)}'
     click.echo(f'saving result to {output_file}')
@@ -24,11 +25,12 @@ def video(file, output_file: str, threshold: float):
 
     # chunk_length is the number of audio frames in 1 video frame as this is
     # the smallest resolution possible to split the video up into.
-    cuts = loud_sections(inpt.audio, int(inpt.audio.fps/inpt.fps),
+    cuts = loud_sections(inpt.audio, int(inpt.audio.fps / inpt.fps),
                          threshold=threshold)
     click.echo(f'making {len(cuts)} cuts')
     final = join_sections(inpt, cuts)
     final.write_videofile(output_file)
+    click.echo('done')
 
 
 @click.command()
@@ -40,7 +42,7 @@ def video(file, output_file: str, threshold: float):
               is_flag=True, flag_value=True)
 @click.option('-v', 'audio_input', help='input file is a video file',
               is_flag=True, flag_value=False)
-@click.option('--resolution', default=1/30,
+@click.option('--resolution', default=1 / 30,
               help='resolution of search in seconds')
 def audio(file, output_file, threshold, audio_input, resolution):
     click.echo(f'extracting audio from {file} and removing silent/quiet' +
