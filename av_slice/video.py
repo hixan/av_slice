@@ -6,9 +6,10 @@ from moviepy.audio.AudioClip import AudioClip
 from typing import Tuple, Iterable, Union
 
 
-def join_sections(video_clip: Union[VideoClip, AudioClip],
-                  sections: Iterable[Tuple[float, float]]
-) -> VideoClip:  # {{{
+def join_sections(
+        video_clip: Union[VideoClip, AudioClip],
+        sections: Iterable[Tuple[float, float]]
+) -> VideoClip:
     '''join sections from video_clip endoded as a list of (start, end) timestamp pairs.
 
     :param video_clip: clip to extract sections from

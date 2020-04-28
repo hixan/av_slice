@@ -2,8 +2,9 @@ import numpy as np
 from moviepy.audio.AudioClip import AudioClip
 from typing import List, Tuple
 
+
 def loud_sections(
-        audio_clip: AudioClip,  # {{{
+        audio_clip: AudioClip,
         chunk_duration: float,
         threshold: float = .01
 ) -> List[Tuple[float, float]]:
@@ -35,4 +36,4 @@ def loud_sections(
                 current_loud = False
     if current_loud:  # add last loud section if necessary.
         loud_sections.append((start_loud, audio_clip.duration))
-    return loud_sections  # }}}
+    return loud_sections
