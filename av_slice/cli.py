@@ -14,7 +14,7 @@ from .video import join_sections
 @click.option('--output_file', default='', help='filename of output')
 @click.option('--threshold', default=.01,
               help='threshold for volume under which to make a cut')
-def video(file, output_file: str, threshold: float):
+def main(file, output_file: str, threshold: float):
     if output_file == '':
         # create a modified version of the original filename.
         n, *ext = file.split('.')
@@ -44,7 +44,7 @@ def video(file, output_file: str, threshold: float):
               is_flag=True, flag_value=False)
 @click.option('--resolution', default=1 / 30,
               help='resolution of search in seconds')
-def audio(file, output_file, threshold, audio_input, resolution):
+def audio(file, output_file, threshold, audio_input, resolution):  # TODO get multiple entry points working
     click.echo(f'extracting audio from {file} and removing silent/quiet' +
                ' portions')
     if output_file == '':
