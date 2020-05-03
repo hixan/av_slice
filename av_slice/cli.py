@@ -14,7 +14,7 @@ from .video import join_sections
 @click.option('--output_file', default='', help='filename of output')
 @click.option('--threshold', default=.01,
               help='threshold for volume under which to make a cut')
-def main(file, output_file: str, threshold: float):
+def video(file, output_file: str, threshold: float):
     if output_file == '':
         # create a modified version of the original filename.
         n, *ext = file.split('.')
